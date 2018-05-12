@@ -19,6 +19,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+
 const router = require('./service/rest.js');
 app.use('/', router);
 app.listen(4200, () => {
