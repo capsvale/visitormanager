@@ -23,3 +23,10 @@ NodeJS API to manage the visitor
 	Method : POST
 	PARAMETERS : PHOTO, firstname, lastname, flatnumber, PHONE, Identity, IdentityNumber
 	API URL    : http://localhost:4200/api/saveOwner
+	
+## Note 
+   Date Format : DD/MM/YYYY 
+   Time Format : 10:51 AM
+   
+## PARAMETERS Naming Conventions
+	"type", "code", "firstName", "lastName", "Phone", "Identity", "Driving License", "IdentityNumber","image", "Society", "Source", "Destination", "VisitingTo", "In_Date", "In_Time", "Out_Date", "Out_Time"

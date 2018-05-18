@@ -16,6 +16,13 @@ router.get('/owner',function(req,res){
 /* post the visitor data */
 router.post('/api/visitorManagement', upload.any(), function(req, res){
 	if(req.body.firstname !=='' && req.body.lastname !=='' && req.body.Phone !=='' && req.body.Identity !=='' && req.body.IdentityNumber !=='' && req.body.Source !=='' && req.body.Destination !=='' && req.body.VisitingTo !=='' && req.body.In_Date !=='' && req.body.In_Time !=='' && typeof req.files[0] !== 'undefined'){
+		
+		// checking date format
+		const date_regex = /^\d{1,2}\/\d{1,2}\/\d{4}$/ ;
+		if(!(date_regex.test(req.body.In_Date))){
+			return res.json({"error": "invalid date format"});
+		}
+		
 		let formData = req.body;
 		formData['image'] = req.files[0].path;
 		fs.readFile(path.join(__dirname, '/../data/visitorManagement.json'), (err, data) => {  
@@ -82,6 +89,12 @@ router.get('/api/visitorDetails', function(req, res) {
 		visitorDetails = JSON.parse(visitorDetails);
 		const visitor = {"data":[]};
 		
+		// checking date format
+		const date_regex = /^\d{1,2}\/\d{1,2}\/\d{4}$/ ;
+		if(!(date_regex.test(req.query.dateFrom) && date_regex.test(req.query.dateTo))){
+			return res.json({"error": "invalid date format"});
+		}
+		
 		if(visitorDetails.data.length > 0){
 			const dateFrom = req.query.dateFrom;
 			const dateTo = req.query.dateTo;
@@ -89,6 +102,11 @@ router.get('/api/visitorDetails', function(req, res) {
 			const d2 = dateTo.split("/");
 			const from = new Date(d1[2], parseInt(d1[1])-1, d1[0]);
 			const to  = new Date(d2[2], parseInt(d2[1])-1, d2[0]);
+			
+			// checking from date will not greater than to date
+			if ( from > to ) {
+				return res.json({"error": "from date will not greater than to date"});
+			}
 		
 			for(let i=0; i < visitorDetails.data.length; i++){			
 				let dateCheck = visitorDetails.data[i].In_Date;
