@@ -42,7 +42,7 @@ router.post('/api/visitorManagement', upload.any(), function(req, res){
 
 /* post Owner / Tenant data */
 router.post('/api/saveOwner', upload.any(), function(req, res){
-	if(req.body.firstname !=='' && req.body.lastname !=='' && req.body.flatnumber !=='' && req.body.Phone !=='' && req.body.Identity !=='' && req.body.IdentityNumber !=='' && typeof req.files[0] !== 'undefined'){
+	if(req.body.type !=='' && req.body.firstname !=='' && req.body.lastname !=='' && req.body.flatnumber !=='' && req.body.Phone !=='' && req.body.Identity !=='' && req.body.IdentityNumber !=='' && typeof req.files[0] !== 'undefined'){
 		let ownerformData = req.body;
 		ownerformData['image'] = req.files[0].path;
 		fs.readFile(path.join(__dirname, '/../data/ownerDetials.json'), (err, data) => {  

@@ -21,7 +21,7 @@ NodeJS API to manage the visitor
 	
 ## API SAVE OWNER DETAILS
 	Method : POST
-	PARAMETERS : PHOTO, firstname, lastname, flatnumber, PHONE, Identity, IdentityNumber
+	PARAMETERS : PHOTO, type, firstname, lastname, flatnumber, PHONE, Identity, IdentityNumber
 	API URL    : http://localhost:4200/api/saveOwner
 	
 ## Note 
