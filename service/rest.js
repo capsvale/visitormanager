@@ -15,7 +15,7 @@ router.get('/owner',function(req,res){
 
 /* post the visitor data */
 router.post('/api/visitorManagement', upload.any(), function(req, res){
-	if(req.body.firstname !=='' && req.body.lastname !=='' && req.body.Phone !=='' && req.body.Identity !=='' && req.body.IdentityNumber !=='' && req.body.Source !=='' && req.body.Destination !=='' && req.body.VisitingTo !=='' && req.body.In_Date !=='' && req.body.In_Time !=='' && typeof req.files[0] !== 'undefined'){
+	if(req.body.type !=='' && req.body.firstname !=='' && req.body.lastname !=='' && req.body.Phone !=='' && req.body.Identity !=='' && req.body.IdentityNumber !=='' && req.body.Source !=='' && req.body.Destination !=='' && req.body.VisitingTo !=='' && req.body.In_Date !=='' && req.body.In_Time !=='' && typeof req.files[0] !== 'undefined'){
 		
 		// checking date format
 		const date_regex = /^\d{1,2}\/\d{1,2}\/\d{4}$/ ;
@@ -24,7 +24,9 @@ router.post('/api/visitorManagement', upload.any(), function(req, res){
 		}
 		
 		let formData = req.body;
-		formData['image'] = req.files[0].path;
+		req.files[0].path = req.files[0].path.substr(6, req.files[0].path.length);
+		formData['image'] = req.protocol + '://' + req.get('host') + req.files[0].path;
+		
 		fs.readFile(path.join(__dirname, '/../data/visitorManagement.json'), (err, data) => {  
 			if (err) throw err;
 			let visitorData = JSON.parse(data);
@@ -44,7 +46,8 @@ router.post('/api/visitorManagement', upload.any(), function(req, res){
 router.post('/api/saveOwner', upload.any(), function(req, res){
 	if(req.body.type !=='' && req.body.firstname !=='' && req.body.lastname !=='' && req.body.flatnumber !=='' && req.body.Phone !=='' && req.body.Identity !=='' && req.body.IdentityNumber !=='' && typeof req.files[0] !== 'undefined'){
 		let ownerformData = req.body;
-		ownerformData['image'] = req.files[0].path;
+		req.files[0].path = req.files[0].path.substr(6, req.files[0].path.length);
+		ownerformData['image'] = req.protocol + '://' + req.get('host') + req.files[0].path;
 		fs.readFile(path.join(__dirname, '/../data/ownerDetials.json'), (err, data) => {  
 			if (err) throw err;
 			let residentData = JSON.parse(data);
@@ -62,6 +65,12 @@ router.post('/api/saveOwner', upload.any(), function(req, res){
 
 /* get types of visitor, used for lookup */
 router.get('/api/visitorLookup', function(req, res){
+	
+	console.log('came');
+	console.log(req.protocol);
+	console.log(req.get('host'));
+	console.log(req.originalUrl);
+	
 	let visitorLookup = fs.readFileSync( path.join(__dirname, '/../data/visitorLookup.json'));
 	visitorLookup = JSON.parse(visitorLookup);
 	if(visitorLookup.data.length > 0){

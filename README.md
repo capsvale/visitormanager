@@ -16,7 +16,7 @@ NodeJS API to manage the visitor
 	
 ## API SAVE VISITOR DETAILS
 	Method : POST
-	PARAMETERS : PHOTO, firstname, lastname, PHONE, Identity, IdentityNumber, Source, Destination, VisitingTo, In_Date, In_Time
+	PARAMETERS : PHOTO, type, firstname, lastname, PHONE, Identity, IdentityNumber, Source, Destination, VisitingTo, In_Date, In_Time
 	API URL    : http://localhost:4200/api/visitorManagement
 	
 ## API SAVE OWNER DETAILS
